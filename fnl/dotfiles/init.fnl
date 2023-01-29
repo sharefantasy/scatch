@@ -18,4 +18,4 @@
 (set nvim.o.expandtab true)
 
 (set nvim.o.background  "dark")
-(nvim.ex.colorscheme :gruvbox)
+

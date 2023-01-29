@@ -1,13 +1,14 @@
 return require('packer').startup(function(use) 
-	use 'Olical/nvim-local-fennel'
-	use 'Olical/aniseed'
-	use 'Olical/fennel.vim'
-	use 'Olical/conjure'
-	use 'tpope/vim-vinegar'
-	use {'Shougo/deoplete.nvim', cmd = 'UpdateRemotePlugins'}
-	use 'wlangstroth/vim-racket'
-
-
+    use 'Olical/nvim-local-fennel'
+    use { 'Olical/aniseed', run = function () 
+        vim.g["aniseed#env"] = { module = "dotfiles.init", compile = true } 
+    end }
+    use 'Olical/fennel.vim'
+    use 'Olical/conjure'
+    use 'tpope/vim-vinegar'
+    use {'Shougo/deoplete.nvim', cmd = 'UpdateRemotePlugins', run = function() 
+        vim.g["deoplete#enable_at_startup"] = 1 
+    end }
 
     use 'wbthomason/packer.nvim'
     use 'hrsh7th/nvim-compe'
@@ -28,12 +29,9 @@ return require('packer').startup(function(use)
     use 'rcarriga/nvim-notify'
     use 'romgrk/barbar.nvim'
 
-
-
     use 'Olical/vim-enmasse'
     use 'PeterRincker/vim-argumentative'
     use 'jiangmiao/auto-pairs'
-    use 'liuchengxu/vim-better-default'
     use 'mbbill/undotree'
     use 'haya14busa/incsearch.vim'
     use 'dense-analysis/ale'
@@ -87,12 +85,9 @@ return require('packer').startup(function(use)
     use 'kristijanhusak/orgmode.nvim'
     use 'wlangstroth/vim-racket'
     use 'ray-x/go.nvim'
-    use { "ellisonleao/gruvbox.nvim" }
+    use { "ellisonleao/gruvbox.nvim" , config = function () 
+        vim.cmd.colorscheme ("gruvbox") 
+    end }
 
-
-    vim.g["aniseed#env"] = {
-      module = "dotfiles.init",
-      compile = true
-    }
-    vim.g["deoplete#enable_at_startup"] = 1
 end)
+
