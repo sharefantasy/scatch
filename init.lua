@@ -47,7 +47,7 @@ local lsp_flags = {
 }
 
 local LISP_LANG = {"scheme", "guile", "fennel", "hy", "racket"}
-local DEV_LANG = {"go", "gomod", "gosum", "python", "sh", 'lua', "thrift", "sql", "fennel"}
+local DEV_LANG = {"go", "gomod", "gosum", "python", "sh", 'lua', "thrift", "sql", "fennel", "scheme"}
 local DOTFILE_LANG = {'fennel', 'lua'}
 local CONFIG_LANG = {'json', 'toml', 'yaml'}
 local DOCUMENT_LANG = {"markdown", "org", "rst"}
@@ -147,20 +147,20 @@ packer.startup(function(use)
     use { "williamboman/mason.nvim" , config = function () require("mason").setup() end }
     use { "williamboman/mason-lspconfig" , config = function () require("mason-lspconfig").setup() end , requires = "williamboman/mason.nvim" }
     use {'neovim/nvim-lspconfig', ft = DEV_LANG, config = function()
-        lspconf = require('lspconfig')
-        lspconf['pyright'].setup{
+        lspconfig = require('lspconfig')
+        lspconfig['pyright'].setup{
             on_attach = on_attach,
             flags = lsp_flags,
         }
-        lspconf ['fennel-ls'].setup{
+        lspconfig['fennel-ls'].setup{
             on_attach = on_attach,
             flags = lsp_flags,
         }
-        lspconf ['gopls'].setup{
+        lspconfig['gopls'].setup{
             on_attach = on_attach,
             flags = lsp_flags,
         }
-        lspconf['sumneko_lua'].setup{
+        lspconfig['sumneko_lua'].setup{
             on_attach = on_attach,
             flags = lsp_flags,
             settings = {
@@ -183,6 +183,10 @@ packer.startup(function(use)
                     },
                 },
             },
+        }
+        lspconfig['racket_langserver'].setup{
+            on_attach = on_attach,
+            flags = lsp_flags,
         }
     end}
     use {'jose-elias-alvarez/null-ls.nvim',  ft = DEV_LANG}
