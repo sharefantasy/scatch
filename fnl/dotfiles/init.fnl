@@ -19,3 +19,5 @@
 
 (set nvim.o.background  "dark")
 
+(set nvim.o.clipboard :unnamedplus)
+
