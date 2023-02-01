@@ -50,7 +50,6 @@ local lsp_flags = {
 local LISP_LANG = { "scheme", "guile", "fennel", "hy", "racket" }
 local DEV_LANG = { "go", "gomod", "gosum", "python", "sh", 'lua', "thrift", "sql", "fennel", "scheme" }
 local DOTFILE_LANG = { 'fennel', 'lua' }
-local CONFIG_LANG = { 'json', 'toml', 'yaml' }
 local DOCUMENT_LANG = { "markdown", "org", "rst" }
 
 local packer = require('packer')
@@ -111,7 +110,9 @@ packer.startup(function(use)
     -- editor
     use { 'mbbill/undotree', ft = DEV_LANG }
     use { 'mfussenegger/nvim-lint', ft = DEV_LANG }
-    use { 'tpope/vim-surround', ft = DEV_LANG }
+    use { 'kylechui/nvim-surround', config = function()
+        require("nvim-surround").setup()
+    end }
     use { 'tpope/vim-repeat', ft = DEV_LANG }
     use { 'tpope/vim-abolish', ft = DEV_LANG }
     use { 'tpope/vim-commentary', ft = DEV_LANG }
@@ -159,8 +160,11 @@ packer.startup(function(use)
 
     -- lsp management
     use { "williamboman/mason.nvim", config = function() require("mason").setup() end }
-    use { "williamboman/mason-lspconfig", config = function() require("mason-lspconfig").setup() end,
-        requires = "williamboman/mason.nvim" }
+    use { "williamboman/mason-lspconfig", requires = "williamboman/mason.nvim", config = function()
+        require("mason-lspconfig").setup({
+            ensure_installed = { "sumneko_lua", "gopls", "pyright", "sqls" },
+        })
+    end }
     use { 'neovim/nvim-lspconfig', ft = DEV_LANG, config = function()
         local lspconfig = require('lspconfig')
         lspconfig['pyright'].setup {
@@ -333,7 +337,7 @@ packer.startup(function(use)
 
     -- language support
     use { 'kristijanhusak/orgmode.nvim', ft = 'org' }
-    use { 'wlangstroth/vim-racket', ft = { 'racket' } }
+    use { 'wlangstroth/vim-racket', ft = { 'racket', 'scheme' } }
     use { 'ray-x/go.nvim', ft = "go", config = function()
         local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
         vim.api.nvim_create_autocmd("BufWritePre", {
@@ -381,5 +385,5 @@ packer.startup(function(use)
     use { 'gpanders/nvim-parinfer', ft = LISP_LANG }
     use { 'guns/vim-sexp', ft = LISP_LANG }
     use { 'tpope/vim-sexp-mappings-for-regular-people', ft = LISP_LANG, requires = 'guns/vim-sexp' }
-    use { 'kovisoft/slimv', ft = { 'scheme' } }
+    use { 'kovisoft/slimv', ft = {} }
 end)

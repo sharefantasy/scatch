@@ -8,6 +8,7 @@ Evolving neovim configuration for minimal go/python/fennel/scheme development wi
 * distant
 * language
     * fennel-ls/fennel-languageserver (for fennel)
+    * antifennel
     * drracket 
     * racket-langserver (for scheme/racket)
     * pyright
