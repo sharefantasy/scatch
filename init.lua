@@ -105,6 +105,12 @@ packer.startup(function(use)
         require("sidebar-nvim").setup({ open = false })
     end }
     use { 'xiyaowong/virtcolumn.nvim' }
+    use { 'ray-x/navigator.lua', config = function()
+        require("navigator").setup()
+        if vim.o.ft == 'clap_input' and vim.o.ft == 'guihua' and vim.o.ft == 'guihua_rust' then
+            require 'cmp'.setup.buffer { completion = { enable = false } }
+        end
+    end }
 
 
     -- editor
@@ -130,12 +136,7 @@ packer.startup(function(use)
             disable_filetype = { "TelescopePrompt", "guihua", "guihua_rust", "clap_input" },
         }
     end }
-    use { 'ray-x/navigator.lua', config = function()
-        require("navigator").setup()
-        if vim.o.ft == 'clap_input' and vim.o.ft == 'guihua' and vim.o.ft == 'guihua_rust' then
-            require 'cmp'.setup.buffer { completion = { enable = false } }
-        end
-    end }
+    use 'cshuaimin/ssr.nvim'
 
     -- startup & ext
     use 'tweekmonster/startuptime.vim'
